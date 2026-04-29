@@ -9,3 +9,6 @@ venv/
 output/
 .DS_Store
 *.egg-info/
+.streamlit/secrets.toml
+# Word lock files
+~$*.docx

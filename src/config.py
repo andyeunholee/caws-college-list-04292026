@@ -14,8 +14,13 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
 
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6").strip()
 
-DEFAULT_ELITE_DIR = "H:/My Drive/Automation-H/AntiGravity/Elite US College Data Sheet"
-ELITE_DATA_DIR = Path(os.getenv("ELITE_DATA_DIR", DEFAULT_ELITE_DIR))
+_DEFAULT_ELITE_DIR = PROJECT_ROOT / "data" / "elite"
+_env_elite = os.getenv("ELITE_DATA_DIR", "").strip()
+if _env_elite:
+    _p = Path(_env_elite)
+    ELITE_DATA_DIR = _p if _p.is_absolute() else (PROJECT_ROOT / _p)
+else:
+    ELITE_DATA_DIR = _DEFAULT_ELITE_DIR
 
 OUTPUT_DIR = PROJECT_ROOT / "output"
 PROMPTS_DIR = PROJECT_ROOT / "src" / "prompts"

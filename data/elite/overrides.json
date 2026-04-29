@@ -1,0 +1,1887 @@
+{
+    "Princeton University": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "Massachusetts Institute of Technology": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "5.2% *"
+    },
+    "Harvard University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "Stanford University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "Yale University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "University of Chicago": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/03",
+        "ea_deadline": "11/03",
+        "rea_deadline": null
+    },
+    "Johns Hopkins University": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of Pennsylvania": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "California Institute of Technology": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "Duke University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/03",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Dartmouth College": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Northwestern University": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Brown University": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Vanderbilt University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Columbia University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Cornell University": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Rice University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Washington University in St. Louis": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/03",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of Notre Dame": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01"
+    },
+    "University of California, Los Angeles": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Urban*",
+        "defer_policy": true,
+        "sat_act_override": "Test-Blind *",
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "Emory University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of California, Berkeley": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Urban*",
+        "defer_policy": true,
+        "sat_act_override": "Test-Blind *",
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "Georgetown University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": true,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": "11/01*",
+        "early_acceptance_rate": "9.6% *"
+    },
+    "Carnegie Mellon University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "early_acceptance_rate": "26.0% *"
+    },
+    "University of Michigan-Ann Arbor": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of North Carolina at Chapel Hill": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "17.0% *"
+    },
+    "University of Virginia": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Southern California": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Tufts University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/03",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "New York University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of California, Santa Barbara": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Suburban*",
+        "defer_policy": true,
+        "sat_act_override": "Test-Blind *",
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of Florida": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Georgia Institute of Technology": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15",
+        "rea_deadline": null
+    },
+    "University of Rochester": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Boston College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Wake Forest University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Lehigh University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Northeastern University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "William & Mary": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of Georgia": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15",
+        "rea_deadline": null
+    },
+    "University of California, Santa Cruz": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Suburban*",
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "Worcester Polytechnic Institute": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Howard University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Delaware": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Rochester Institute of Technology": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Southern Methodist University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of South Florida": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "American University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Loyola Marymount University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Denver": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Baylor University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "Loyola University Chicago": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Texas Christian University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Minnesota Twin Cities": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Rutgers University-New Brunswick": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Iowa": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "University of Colorado Boulder": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "University at Buffalo": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Utah": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "University of Tennessee": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Gonzaga University": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Florida International University": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "N/A *"
+    },
+    "Yeshiva University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Williams College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Amherst College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/07",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Swarthmore College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Pomona College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/08",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Wellesley College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Bowdoin College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Carleton College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Middlebury College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Claremont McKenna College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Davidson College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Washington and Lee University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Colby College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Colgate University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Hamilton College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Harvey Mudd College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Vassar College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Smith College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Sewanee: The University of the South": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "12/01",
+        "rea_deadline": null,
+        "setting": "Rural*"
+    },
+    "Augustana College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "College of Wooster": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Juniata College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Beloit College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Gustavus Adolphus College": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Ohio Wesleyan University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Luther College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Hope College": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Kalamazoo College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Hanover College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "Ripon College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Austin College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Agnes Scott College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Berea College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null,
+        "tuition_in_state": "0.0*",
+        "tuition_out_of_state": "0.0*",
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of Puget Sound": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Hendrix College": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "St. John's College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Transylvania University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "10/31",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Pitzer College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Sarah Lawrence College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Illinois Wesleyan University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Randolph-Macon College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "10/17",
+        "rea_deadline": null
+    },
+    "Hampden-Sydney College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Morehouse College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "12/15",
+        "rea_deadline": null
+    },
+    "Spelman College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Knox College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Lake Forest College": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Alma College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Concordia College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Willamette University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Westminster College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Wittenberg University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Millsaps College": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15",
+        "rea_deadline": null,
+        "defer_policy": true
+    },
+    "Gordon College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Hiram College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Pacific Lutheran University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Covenant College": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/10",
+        "rea_deadline": null
+    },
+    "Monmouth College": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "Drew University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    },
+    "Muskingum University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Albion College": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Wisconsin-Madison": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Tulane University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/10",
+        "rea_deadline": null
+    },
+    "University of Illinois Urbana-Champaign": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Purdue University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Ohio State University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Pennsylvania State University": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Texas A&M University": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15*",
+        "rea_deadline": null,
+        "defer_policy": true,
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of Texas at Austin": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null,
+        "defer_policy": true,
+        "early_acceptance_rate": "N/A *"
+    },
+    "Indiana University Bloomington": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "University of Washington": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "defer_policy": true,
+        "due_date_override": "11/15 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "Michigan State University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Virginia Tech": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Case Western Reserve University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Maryland, College Park": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null,
+        "setting": "Suburban*"
+    },
+    "Boston University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Rensselaer Polytechnic Institute": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "University of Pittsburgh": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "Florida State University": {
+        "test_policy": "Required",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15",
+        "rea_deadline": null
+    },
+    "Villanova University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Stony Brook University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01*",
+        "rea_deadline": null,
+        "defer_policy": true,
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of Massachusetts Amherst": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/05",
+        "rea_deadline": null
+    },
+    "North Carolina State University": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "30.0% *"
+    },
+    "University of California, Merced": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Rural*",
+        "defer_policy": true,
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "Brandeis University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "George Washington University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Fordham University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "University of Miami": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Syracuse University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "67.5% *"
+    },
+    "Stevens Institute of Technology": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "University of Connecticut": {
+        "test_policy": "Optional*",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "12/01*",
+        "rea_deadline": null,
+        "early_acceptance_rate": "42.5% *"
+    },
+    "United States Naval Academy": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "tuition_in_state": "0.0*",
+        "tuition_out_of_state": "0.0*",
+        "due_date_override": "1/31 *"
+    },
+    "United States Military Academy": {
+        "test_policy": "Required*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "tuition_in_state": "0.0*",
+        "tuition_out_of_state": "0.0*",
+        "due_date_override": "1/31 *"
+    },
+    "Haverford College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Barnard College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "College of the Holy Cross": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Bates College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Grinnell College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "early_acceptance_rate": "32.5% *"
+    },
+    "Occidental College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Kenyon College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Colorado College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Mount Holyoke College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Trinity College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/15*",
+        "rea_deadline": null
+    },
+    "University of Richmond": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/01",
+        "rea_deadline": null,
+        "early_acceptance_rate": "47.5% *"
+    },
+    "Furman University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Denison University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Dickinson College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Scripps College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "St. Olaf College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Bryn Mawr College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Bucknell University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "early_acceptance_rate": "47.5% *"
+    },
+    "Lafayette College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Skidmore College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Union College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Whitman College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Oberlin College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Reed College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Macalester College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Connecticut College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Muhlenberg College": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Franklin & Marshall College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": null,
+        "rea_deadline": null
+    },
+    "Gettysburg College": {
+        "test_policy": "Required",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Lawrence University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Rhodes College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "DePauw University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Wabash College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Centre College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Allegheny College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "12/01",
+        "rea_deadline": null
+    },
+    "Earlham College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Wofford College": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Hobart and William Smith Colleges": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15",
+        "ea_deadline": "11/15",
+        "rea_deadline": null,
+        "setting": "Small Town*"
+    },
+    "Clemson University": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "10/15",
+        "rea_deadline": null
+    },
+    "University of California, Davis": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Suburban*",
+        "defer_policy": true,
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of California, San Diego": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Urban*",
+        "defer_policy": true,
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "University of California, Irvine": {
+        "test_policy": "Test-Blind*",
+        "has_ed": false,
+        "has_ea": false,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": null,
+        "rea_deadline": null,
+        "setting": "Urban*",
+        "defer_policy": true,
+        "due_date_override": "UC: 11/30 *",
+        "early_acceptance_rate": "N/A *"
+    },
+    "New Jersey Institute of Technology": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/15*",
+        "ea_deadline": "12/01*",
+        "rea_deadline": null
+    },
+    "Drexel University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/01*",
+        "rea_deadline": null
+    },
+    "Colorado School of Mines": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Santa Clara University": {
+        "test_policy": "Optional",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01",
+        "ea_deadline": "11/01",
+        "rea_deadline": null
+    },
+    "Marquette University": {
+        "test_policy": "Optional",
+        "has_ed": false,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": null,
+        "ea_deadline": "11/15",
+        "rea_deadline": null
+    },
+    "Pepperdine University": {
+        "test_policy": "Optional*",
+        "has_ed": true,
+        "has_ea": true,
+        "has_rea": false,
+        "ed_deadline": "11/01*",
+        "ea_deadline": "11/15*",
+        "rea_deadline": null
+    }
+}
