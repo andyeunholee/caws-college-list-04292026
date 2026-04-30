@@ -59,18 +59,36 @@ def _grounding_to_jsonable(facts: list[CollegeFact]) -> list[dict[str, Any]]:
     ]
 
 
-def _build_system_blocks(grounding_subset: list[CollegeFact]) -> list[dict[str, Any]]:
+def _build_system_blocks(
+    grounding_subset: list[CollegeFact],
+    *,
+    disable_grounding: bool = False,
+) -> list[dict[str, Any]]:
     persona = _read_prompt("generation_system.md")
     calibration = _read_prompt("probability_calibration.md")
-    grounding_json = json.dumps(_grounding_to_jsonable(grounding_subset), ensure_ascii=False)
-    big_block = (
-        f"{persona}\n\n---\n\n{calibration}\n\n---\n\n"
-        "# Authoritative grounding facts for this scope\n\n"
-        "Treat the following JSON array as a high-confidence source for the colleges listed. "
-        "Use the values as-is unless you have strong reason otherwise. For colleges not in this "
-        "array, use your training knowledge but be conservative.\n\n"
-        f"```json\n{grounding_json}\n```\n"
-    )
+    base = f"{persona}\n\n---\n\n{calibration}\n\n---\n\n"
+    if disable_grounding:
+        big_block = (
+            base
+            + "# Source of facts\n\n"
+            "No external grounding dataset is provided for this run. "
+            "Rely entirely on your own training knowledge for college names, states, "
+            "acceptance rates, ED/EA availability, and deadlines. "
+            "Be conservative with probability estimates when uncertain, and never invent "
+            "colleges that do not exist.\n"
+        )
+    else:
+        grounding_json = json.dumps(
+            _grounding_to_jsonable(grounding_subset), ensure_ascii=False
+        )
+        big_block = (
+            base
+            + "# Authoritative grounding facts for this scope\n\n"
+            "Treat the following JSON array as a high-confidence source for the colleges "
+            "listed. Use the values as-is unless you have strong reason otherwise. For "
+            "colleges not in this array, use your training knowledge but be conservative.\n\n"
+            f"```json\n{grounding_json}\n```\n"
+        )
     return [claude_client.make_text_block(big_block)]
 
 
@@ -200,6 +218,46 @@ def _validate_rows(raw_rows: list[dict[str, Any]], tier: Tier) -> list[CollegeRo
     return out
 
 
+def _dedup_across_tiers(
+    reach: list[CollegeRow],
+    match_: list[CollegeRow],
+    safety: list[CollegeRow],
+) -> tuple[list[CollegeRow], list[CollegeRow], list[CollegeRow]]:
+    """Drop duplicate college names across tiers.
+
+    Independent Claude calls per tier can place the same college in two tiers
+    (e.g. Spelman in both Match and Safety with slightly different probabilities).
+    We resolve by keeping the most-conservative tier — i.e. priority is
+    reach > match > safety. The first occurrence in tier-priority order wins.
+    """
+
+    def _norm(name: str) -> str:
+        return re.sub(r"[^a-z0-9]", "", name.lower())
+
+    seen: set[str] = set()
+    dropped: list[str] = []
+
+    def _filter(rows: list[CollegeRow]) -> list[CollegeRow]:
+        out: list[CollegeRow] = []
+        for r in rows:
+            key = _norm(r.name)
+            if key in seen:
+                dropped.append(r.name)
+                continue
+            seen.add(key)
+            out.append(r)
+        return out
+
+    new_reach = _filter(reach)
+    new_match = _filter(match_)
+    new_safety = _filter(safety)
+    if dropped:
+        logging_ko.info(
+            f"Cross-tier 중복 제거: {len(dropped)}개 ({', '.join(sorted(set(dropped))[:5])}{' …' if len(set(dropped)) > 5 else ''})"
+        )
+    return new_reach, new_match, new_safety
+
+
 # ────────────────────── core call ──────────────────────
 
 
@@ -212,6 +270,7 @@ def _generate_one_tier(
     target_count: int,
     *,
     raw_dump_path: Path | None = None,
+    model_override: str | None = None,
 ) -> list[CollegeRow]:
     user_message = _tier_user_message(scope, tier, profile, target_count)
     label = f"{_SCOPE_LABELS[scope]} — {tier.upper()}"
@@ -224,6 +283,7 @@ def _generate_one_tier(
         temperature=0.3,
         cache_last_block=True,
         label=label,
+        model_override=model_override,
     )
 
     if raw_dump_path is not None:
@@ -249,6 +309,7 @@ def _generate_one_tier(
             temperature=0.2,
             cache_last_block=True,
             label=f"{label} (재시도)",
+            model_override=model_override,
         )
         if raw_dump_path is not None:
             raw_dump_path.write_text(text, encoding="utf-8")
@@ -266,10 +327,19 @@ def generate_tiered_list(
     client: Anthropic,
     *,
     save_raw_to: Path | None = None,
+    disable_grounding: bool = False,
+    model_override: str | None = None,
 ) -> TieredList:
-    """Generate one scope's Reach/Match/Safety tiered list via 3 sub-calls."""
+    """Generate one scope's Reach/Match/Safety tiered list via 3 sub-calls.
 
-    system_blocks = _build_system_blocks(grounding_subset)
+    Cross-tier dedup is applied: if the same college appears in multiple tiers
+    (independent calls can disagree), keep the most-conservative (lowest-prob)
+    placement — i.e. reach > match > safety in priority.
+    """
+
+    system_blocks = _build_system_blocks(
+        grounding_subset, disable_grounding=disable_grounding
+    )
     logging_ko.step(f"=== {_SCOPE_LABELS[scope]} ===")
 
     # save_raw_to is treated as a directory base; we'll write 3 files inside its parent.
@@ -285,14 +355,19 @@ def generate_tiered_list(
         return raw_dir / f"{base_name}_{tier}.txt"
 
     reach = _generate_one_tier(
-        client, system_blocks, profile, scope, "reach", 50, raw_dump_path=_dump_path("reach")
+        client, system_blocks, profile, scope, "reach", 50,
+        raw_dump_path=_dump_path("reach"), model_override=model_override,
     )
     match_ = _generate_one_tier(
-        client, system_blocks, profile, scope, "match", 50, raw_dump_path=_dump_path("match")
+        client, system_blocks, profile, scope, "match", 50,
+        raw_dump_path=_dump_path("match"), model_override=model_override,
     )
     safety = _generate_one_tier(
-        client, system_blocks, profile, scope, "safety", 50, raw_dump_path=_dump_path("safety")
+        client, system_blocks, profile, scope, "safety", 50,
+        raw_dump_path=_dump_path("safety"), model_override=model_override,
     )
+
+    reach, match_, safety = _dedup_across_tiers(reach, match_, safety)
 
     result = TieredList(scope=scope, reach=reach, match=match_, safety=safety)
 

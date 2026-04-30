@@ -88,10 +88,20 @@ def _run_pipeline(
     raw_text: str,
     lang: LangChoice,
     log: Callable[[str], None],
+    *,
+    disable_grounding: bool = False,
+    research_model: str | None = None,
 ) -> dict[str, Path]:
     """Drive the full extract → ground → generate → docx pipeline.
 
     Returns mapping {"ko": path, "en": path} for whichever languages were generated.
+
+    Args:
+        disable_grounding: If True, skip the Elite dataset grounding block in
+            system prompts and let Claude rely solely on its training knowledge.
+        research_model: If set (e.g. "claude-opus-4-7"), used for the per-scope
+            tiered list generation calls only. Extraction, action plan and
+            translation always use the default Sonnet model for cost reasons.
     """
 
     config.require_api_key()
@@ -110,6 +120,8 @@ def _run_pipeline(
 
     log("2/7 Elite 데이터셋 로딩 및 큐레이션 중…")
     corpus = load_elite_dataset(config.ELITE_DATA_DIR)
+    if disable_grounding:
+        log("   ⓘ Grounding OFF — Claude 학습 지식만 사용")
     curated = {
         "national_excl_home": curate_for_scope(corpus, "national_excl_home", profile.state),
         "in_state": curate_for_scope(corpus, "in_state", profile.state),
@@ -119,6 +131,9 @@ def _run_pipeline(
         f"   → National {len(curated['national_excl_home'])} / "
         f"In-state {len(curated['in_state'])} / LAC {len(curated['lac'])}"
     )
+
+    if research_model:
+        log(f"   ⓘ Research model: {research_model} (생성 단계에만 적용)")
 
     scope_filenames = {
         "national_excl_home": "national.json",
@@ -130,7 +145,10 @@ def _run_pipeline(
         log(f"{i}/7 Claude로 {scope} 리스트 생성 중… (60-90초)")
         cached_path = raw_dir / scope_filenames[scope]
         scopes_result[scope] = generate_tiered_list(
-            profile, scope, curated[scope], client, save_raw_to=cached_path
+            profile, scope, curated[scope], client,
+            save_raw_to=cached_path,
+            disable_grounding=disable_grounding,
+            model_override=research_model,
         )
         log(
             f"   → reach {len(scopes_result[scope].reach)} / "
@@ -244,6 +262,28 @@ lang_map: dict[str, LangChoice] = {
 }
 lang: LangChoice = lang_map[lang_label]
 
+with st.expander("고급 설정 (선택)", expanded=False):
+    disable_grounding = st.checkbox(
+        "Elite 데이터셋 사용 안 함 — Claude 학습 지식만으로 research",
+        value=False,
+        help=(
+            "기본은 OFF. 켜면 repo의 Elite 그라운딩(202개 대학 합격률·ED/EA 정보)을 "
+            "system prompt에서 제거하고, Claude가 본인 학습 지식만으로 추천을 만듭니다. "
+            "신규 학교나 더 자유로운 추천이 가능하지만, 합격률·마감일이 덜 일관될 수 있습니다."
+        ),
+    )
+    use_opus_for_research = st.checkbox(
+        "Research 단계에 Opus 사용 (Sonnet 대신)",
+        value=False,
+        help=(
+            "기본은 OFF (Sonnet). 켜면 Reach/Match/Safety 리스트 생성(총 9회 호출)에만 "
+            "Opus 4.7을 씁니다. 추론 품질↑, 비용 약 5배↑ (학생 1명당 ≈ $2-3). "
+            "추출·액션 플랜·번역은 비용 절감을 위해 항상 Sonnet."
+        ),
+    )
+
+research_model: str | None = "claude-opus-4-7" if use_opus_for_research else None
+
 generate_clicked = st.button("College List 생성", type="primary", use_container_width=True)
 
 if generate_clicked:
@@ -298,7 +338,13 @@ if generate_clicked:
 
             _ko.cost = _capture_cost  # type: ignore[assignment]
             try:
-                written = _run_pipeline(raw_text, lang, log)
+                written = _run_pipeline(
+                    raw_text,
+                    lang,
+                    log,
+                    disable_grounding=disable_grounding,
+                    research_model=research_model,
+                )
             finally:
                 for k, v in _orig.items():
                     setattr(_ko, k, v)
