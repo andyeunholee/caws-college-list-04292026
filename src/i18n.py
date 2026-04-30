@@ -91,24 +91,24 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "sat_token_default": "current SAT",
 
         # ─── Parts ───
-        "part1_h1": (
-            "Part 1 — National Universities List "
-            "(All colleges in the home state — including LACs — are excluded)"
-        ),
-        "part2_h1": "Part 2 — Liberal Arts Colleges Nationwide (Excluding home-state LACs)",
-        "part2_intro": (
-            "LACs are a strategically important segment for Pre-Med because of "
-            "strong advising, small class sizes, and — critically — deep QuestBridge "
-            "partnership density. LACs located in the student's home state are "
-            "intentionally listed in Part 3 instead of here. ⭐ QB marks colleges that "
-            "are QuestBridge National College Match partners."
-        ),
-        "part3_h1": "Part 3 — {state} Home-State Colleges (LACs included)",
-        "part3_intro": (
+        "part1_h1": "Part 1 — {state} Home-State Colleges (LACs included)",
+        "part1_intro": (
             "All colleges in {state} are listed here — both LACs and non-LACs. "
             "LACs are tagged with \"(LAC)\" next to the school name. "
             "In-state tuition and state-merit scholarship eligibility are the "
             "strongest practical drivers in this section."
+        ),
+        "part2_h1": (
+            "Part 2 — National Universities List "
+            "(All colleges in the home state — including LACs — are excluded)"
+        ),
+        "part3_h1": "Part 3 — Liberal Arts Colleges Nationwide (Excluding home-state LACs)",
+        "part3_intro": (
+            "LACs are a strategically important segment for Pre-Med because of "
+            "strong advising, small class sizes, and — critically — deep QuestBridge "
+            "partnership density. LACs located in the student's home state are "
+            "intentionally listed in Part 1 instead of here. ⭐ QB marks colleges that "
+            "are QuestBridge National College Match partners."
         ),
         "part4_h1": "Part 4 — Early Decision (ED) Options",
         "part4_intro": (
@@ -240,21 +240,21 @@ STRINGS: dict[Lang, dict[str, str]] = {
         "sat_token_default": "현재 SAT 점수",
 
         # ─── Part 1-6 ───
-        "part1_h1": "1부 — 전국 대학 리스트 (거주 주의 모든 대학 — LAC 포함 — 제외)",
-        "part2_h1": "2부 — 전국 LAC 대학 리스트 (거주 주 LAC만 제외)",
-        "part2_intro": (
-            "LAC는 Pre-Med 지원자에게 전략적으로 중요한 카테고리입니다. "
-            "강력한 학생 어드바이징, 소규모 강의, 그리고 — 결정적으로 — 높은 "
-            "QuestBridge 파트너십 비율 때문입니다. 거주 주에 위치한 LAC는 "
-            "이 섹션이 아니라 3부(거주 주 대학)에 함께 표시됩니다. "
-            "⭐ QB는 QuestBridge National College Match 파트너 대학 표시입니다."
-        ),
-        "part3_h1": "3부 — {state} 거주 주 대학 리스트 (LAC 포함)",
-        "part3_intro": (
+        "part1_h1": "1부 — {state} 거주 주 대학 리스트 (LAC 포함)",
+        "part1_intro": (
             "{state} 주의 모든 대학(LAC 포함)이 여기에 정리됩니다. "
             "LAC인 학교는 학교명 옆에 \"(LAC)\" 표시가 붙습니다. "
             "거주 주이므로 in-state 학비와 주(state) 장학금 자격이 가장 중요한 "
             "실용적 동인입니다."
+        ),
+        "part2_h1": "2부 — 전국 대학 리스트 (거주 주의 모든 대학 — LAC 포함 — 제외)",
+        "part3_h1": "3부 — 전국 LAC 대학 리스트 (거주 주 LAC만 제외)",
+        "part3_intro": (
+            "LAC는 Pre-Med 지원자에게 전략적으로 중요한 카테고리입니다. "
+            "강력한 학생 어드바이징, 소규모 강의, 그리고 — 결정적으로 — 높은 "
+            "QuestBridge 파트너십 비율 때문입니다. 거주 주에 위치한 LAC는 "
+            "이 섹션이 아니라 1부(거주 주 대학)에 함께 표시됩니다. "
+            "⭐ QB는 QuestBridge National College Match 파트너 대학 표시입니다."
         ),
         "part4_h1": "4부 — Early Decision (ED) 옵션",
         "part4_intro": (

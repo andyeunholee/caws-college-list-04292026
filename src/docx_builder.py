@@ -3,9 +3,9 @@
 Layout:
 - Page header (student name) + "Page X of Y" footer
 - Title block + Student Profile Snapshot + Note on Probabilities
-- Part 1  — National (excluding home state and LACs)
-- Part 2  — Home-state colleges (excluding LACs)
-- Part 3  — Liberal Arts Colleges nationwide
+- Part 1  — Home-state colleges (LACs included, tagged "(LAC)")
+- Part 2  — National universities (excluding home state, excluding LACs)
+- Part 3  — Liberal Arts Colleges nationwide (excluding home-state LACs)
 - Part 4  — Early Decision options
 - Part 5  — Early Action options
 - Part 6  — Action plan
@@ -489,22 +489,7 @@ def _add_tier(
     _add_college_table(doc, rows, lang, lac_names=lac_names)
 
 
-def _add_part1_national(doc: Document, tlist: TieredList, lang: Lang) -> None:
-    _h1(doc, s(lang, "part1_h1"))
-    _add_tier(doc, "reach", str(len(tlist.reach)), tlist.reach, lang)
-    _add_tier(doc, "match", str(len(tlist.match)), tlist.match, lang)
-    _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
-
-
-def _add_part2_lac(doc: Document, tlist: TieredList, lang: Lang) -> None:
-    _h1(doc, s(lang, "part2_h1"))
-    _para(doc, s(lang, "part2_intro"))
-    _add_tier(doc, "reach", str(len(tlist.reach)), tlist.reach, lang)
-    _add_tier(doc, "match", str(len(tlist.match)), tlist.match, lang)
-    _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
-
-
-def _add_part3_instate(
+def _add_instate_section(
     doc: Document,
     tlist: TieredList,
     profile: StudentProfile,
@@ -512,12 +497,30 @@ def _add_part3_instate(
     *,
     lac_names: frozenset[str] | None = None,
 ) -> None:
+    """Home-state colleges including LACs. Now the FIRST section (Part 1)."""
     state = profile.state or ("Home State" if lang == "en" else "거주 주")
-    _h1(doc, s(lang, "part3_h1", state=state))
-    _para(doc, s(lang, "part3_intro", state=state))
+    _h1(doc, s(lang, "part1_h1", state=state))
+    _para(doc, s(lang, "part1_intro", state=state))
     _add_tier(doc, "reach", state, tlist.reach, lang, use_state_label=True, lac_names=lac_names)
     _add_tier(doc, "match", state, tlist.match, lang, use_state_label=True, lac_names=lac_names)
     _add_tier(doc, "safety", state, tlist.safety, lang, use_state_label=True, lac_names=lac_names)
+
+
+def _add_national_section(doc: Document, tlist: TieredList, lang: Lang) -> None:
+    """National universities outside the home state. Now the SECOND section (Part 2)."""
+    _h1(doc, s(lang, "part2_h1"))
+    _add_tier(doc, "reach", str(len(tlist.reach)), tlist.reach, lang)
+    _add_tier(doc, "match", str(len(tlist.match)), tlist.match, lang)
+    _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
+
+
+def _add_lac_section(doc: Document, tlist: TieredList, lang: Lang) -> None:
+    """LACs nationwide excluding home-state LACs. Now the THIRD section (Part 3)."""
+    _h1(doc, s(lang, "part3_h1"))
+    _para(doc, s(lang, "part3_intro"))
+    _add_tier(doc, "reach", str(len(tlist.reach)), tlist.reach, lang)
+    _add_tier(doc, "match", str(len(tlist.match)), tlist.match, lang)
+    _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
 
 
 # ────────────────────────── Parts 4-5: ED / EA ──────────────────────────
@@ -708,13 +711,13 @@ def build_docx(
     _add_probability_note(doc, profile, lang)
 
     _page_break(doc)
-    _add_part1_national(doc, national, lang)
+    _add_instate_section(doc, instate, profile, lang, lac_names=lac_names)
 
     _page_break(doc)
-    _add_part2_lac(doc, lac, lang)
+    _add_national_section(doc, national, lang)
 
     _page_break(doc)
-    _add_part3_instate(doc, instate, profile, lang, lac_names=lac_names)
+    _add_lac_section(doc, lac, lang)
 
     _page_break(doc)
     _add_part4_ed(doc, ed_rows, lang)
