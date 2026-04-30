@@ -21,9 +21,9 @@ from .utils import claude_client, logging_ko
 
 
 _SCOPE_LABELS: dict[Scope, str] = {
-    "national_excl_home": "전국 (LAC 제외, 학생 거주 주 제외)",
-    "in_state": "거주 주 4년제 대학 (LAC 제외)",
-    "lac": "전국 Liberal Arts College",
+    "national_excl_home": "전국 대학 리스트 (거주 주의 모든 대학 — LAC 포함 — 제외)",
+    "in_state": "거주 주 대학 리스트 (LAC 포함)",
+    "lac": "전국 LAC 대학 리스트 (거주 주 LAC만 제외)",
 }
 
 _TIER_BANDS: dict[Tier, str] = {
@@ -94,16 +94,17 @@ def _build_system_blocks(
 
 _SCOPE_DIRECTIVE: dict[Scope, str] = {
     "national_excl_home": (
-        "Scope: **National universities, excluding the student's home state and excluding "
-        "all Liberal Arts Colleges.**"
+        "Scope: **National universities (non-LAC) located OUTSIDE the student's home state.** "
+        "Exclude every college in the student's home state — both LACs and non-LACs."
     ),
     "in_state": (
-        "Scope: **4-year colleges in the student's home state, excluding all Liberal Arts "
-        "Colleges.** If fewer real colleges exist in this tier than the target count, output "
-        "as many as realistically exist; do NOT invent."
+        "Scope: **ALL colleges located in the student's home state — both LACs and non-LACs "
+        "are included in this single list.** If fewer real colleges exist in this tier than "
+        "the target count, output as many as realistically exist; do NOT invent."
     ),
     "lac": (
-        "Scope: **Liberal Arts Colleges nationwide** (in-state and out-of-state both allowed)."
+        "Scope: **Liberal Arts Colleges nationwide, EXCLUDING any LAC located in the "
+        "student's home state.** (Home-state LACs belong in the in-state list.)"
     ),
 }
 
@@ -113,18 +114,27 @@ def _tier_user_message(
 ) -> str:
     profile_json = json.dumps(profile.model_dump(), ensure_ascii=False, indent=2)
     home_state = profile.state or "UNKNOWN"
-    home_filter = (
-        f"Exclude any college whose state == \"{home_state}\". " if scope == "national_excl_home" else ""
-    )
-    in_state_filter = (
-        f"Include only colleges located in state \"{home_state}\". "
-        if scope == "in_state" else ""
-    )
+    if scope == "national_excl_home":
+        scope_filter = (
+            f"Exclude any college whose state == \"{home_state}\" (both LACs and non-LACs)."
+        )
+    elif scope == "in_state":
+        scope_filter = (
+            f"Include only colleges located in state \"{home_state}\". "
+            "Both LACs and non-LACs in this state are valid."
+        )
+    elif scope == "lac":
+        scope_filter = (
+            f"Exclude any LAC located in state \"{home_state}\" (those belong in the "
+            "in-state list, not here)."
+        )
+    else:
+        scope_filter = ""
     return (
         "## Student profile\n```json\n"
         f"{profile_json}\n"
         "```\n\n"
-        f"## Task\n{_SCOPE_DIRECTIVE[scope]} {home_filter}{in_state_filter}\n\n"
+        f"## Task\n{_SCOPE_DIRECTIVE[scope]} {scope_filter}\n\n"
         f"Produce the **{tier.upper()}** tier only — colleges whose profile-adjusted "
         f"probability puts them in this band: {_TIER_BANDS[tier]}.\n\n"
         f"Target count: {target_count} colleges. If the realistic universe is smaller, "

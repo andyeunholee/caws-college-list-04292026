@@ -410,11 +410,31 @@ def _add_probability_note(doc: Document, profile: StudentProfile, lang: Lang) ->
 # ────────────────────────── Parts 1-3: scope tables ──────────────────────────
 
 
-def _format_school_name(row: CollegeRow) -> str:
-    return f"{row.name}  ⭐ QB" if _is_qb(row.name) else row.name
+def _format_school_name(
+    row: CollegeRow,
+    *,
+    lac_names: frozenset[str] | None = None,
+) -> str:
+    name = row.name
+    if lac_names is not None and _norm_name_key(name) in lac_names:
+        name = f"{name} (LAC)"
+    if _is_qb(row.name):
+        name = f"{name}  ⭐ QB"
+    return name
 
 
-def _add_college_table(doc: Document, rows: list[CollegeRow], lang: Lang) -> None:
+def _norm_name_key(name: str) -> str:
+    """Normalise a college name for case/punctuation-insensitive lookup."""
+    return re.sub(r"[^a-z0-9]", "", name.lower())
+
+
+def _add_college_table(
+    doc: Document,
+    rows: list[CollegeRow],
+    lang: Lang,
+    *,
+    lac_names: frozenset[str] | None = None,
+) -> None:
     if not rows:
         _para(doc, s(lang, "tier_no_schools"), italic=True)
         return
@@ -437,7 +457,7 @@ def _add_college_table(doc: Document, rows: list[CollegeRow], lang: Lang) -> Non
     for i, row in enumerate(sorted_rows, start=1):
         cells = table.rows[i].cells
         _set_cell_text(cells[0], str(i), size=10, align=WD_ALIGN_PARAGRAPH.CENTER)
-        _set_cell_text(cells[1], _format_school_name(row), size=10)
+        _set_cell_text(cells[1], _format_school_name(row, lac_names=lac_names), size=10)
         _set_cell_text(cells[2], row.state or "—", size=10, align=WD_ALIGN_PARAGRAPH.CENTER)
         _set_cell_text(
             cells[3],
@@ -455,7 +475,9 @@ def _add_college_table(doc: Document, rows: list[CollegeRow], lang: Lang) -> Non
 
 def _add_tier(
     doc: Document, tier: str, n_or_state: str, rows: list[CollegeRow], lang: Lang,
+    *,
     use_state_label: bool = False,
+    lac_names: frozenset[str] | None = None,
 ) -> None:
     icon = TIER_ICON[tier]
     color = TIER_COLOR[tier]
@@ -464,7 +486,7 @@ def _add_tier(
     else:
         title = s(lang, "tier_heading_n_schools", icon=icon, tier=_tier_label(lang, tier), n=n_or_state)
     _h2(doc, title, color_hex=color)
-    _add_college_table(doc, rows, lang)
+    _add_college_table(doc, rows, lang, lac_names=lac_names)
 
 
 def _add_part1_national(doc: Document, tlist: TieredList, lang: Lang) -> None:
@@ -474,21 +496,28 @@ def _add_part1_national(doc: Document, tlist: TieredList, lang: Lang) -> None:
     _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
 
 
-def _add_part2_instate(doc: Document, tlist: TieredList, profile: StudentProfile, lang: Lang) -> None:
-    state = profile.state or ("Home State" if lang == "en" else "거주 주")
-    _h1(doc, s(lang, "part2_h1", state=state))
-    _para(doc, s(lang, "part2_intro", state=state))
-    _add_tier(doc, "reach", state, tlist.reach, lang, use_state_label=True)
-    _add_tier(doc, "match", state, tlist.match, lang, use_state_label=True)
-    _add_tier(doc, "safety", state, tlist.safety, lang, use_state_label=True)
-
-
-def _add_part3_lac(doc: Document, tlist: TieredList, lang: Lang) -> None:
-    _h1(doc, s(lang, "part3_h1"))
-    _para(doc, s(lang, "part3_intro"))
+def _add_part2_lac(doc: Document, tlist: TieredList, lang: Lang) -> None:
+    _h1(doc, s(lang, "part2_h1"))
+    _para(doc, s(lang, "part2_intro"))
     _add_tier(doc, "reach", str(len(tlist.reach)), tlist.reach, lang)
     _add_tier(doc, "match", str(len(tlist.match)), tlist.match, lang)
     _add_tier(doc, "safety", str(len(tlist.safety)), tlist.safety, lang)
+
+
+def _add_part3_instate(
+    doc: Document,
+    tlist: TieredList,
+    profile: StudentProfile,
+    lang: Lang,
+    *,
+    lac_names: frozenset[str] | None = None,
+) -> None:
+    state = profile.state or ("Home State" if lang == "en" else "거주 주")
+    _h1(doc, s(lang, "part3_h1", state=state))
+    _para(doc, s(lang, "part3_intro", state=state))
+    _add_tier(doc, "reach", state, tlist.reach, lang, use_state_label=True, lac_names=lac_names)
+    _add_tier(doc, "match", state, tlist.match, lang, use_state_label=True, lac_names=lac_names)
+    _add_tier(doc, "safety", state, tlist.safety, lang, use_state_label=True, lac_names=lac_names)
 
 
 # ────────────────────────── Parts 4-5: ED / EA ──────────────────────────
@@ -662,7 +691,14 @@ def build_docx(
     flags: list[ValidationFlag],
     out_path: Path,
     lang: Lang = "en",
+    lac_names: frozenset[str] | None = None,
 ) -> None:
+    """Build the Word report.
+
+    `lac_names` should be a set of normalised college-name keys (lowercased
+    alphanumerics) for every Liberal Arts College known to the corpus. Used
+    only in Part 3 (home-state list) to tag in-state LACs with "(LAC)".
+    """
     doc = Document()
     _setup_document(doc, profile, lang)
 
@@ -675,10 +711,10 @@ def build_docx(
     _add_part1_national(doc, national, lang)
 
     _page_break(doc)
-    _add_part2_instate(doc, instate, profile, lang)
+    _add_part2_lac(doc, lac, lang)
 
     _page_break(doc)
-    _add_part3_lac(doc, lac, lang)
+    _add_part3_instate(doc, instate, profile, lang, lac_names=lac_names)
 
     _page_break(doc)
     _add_part4_ed(doc, ed_rows, lang)

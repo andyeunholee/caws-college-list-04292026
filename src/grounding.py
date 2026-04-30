@@ -124,22 +124,30 @@ def load_elite_dataset(elite_dir: Path) -> EliteCorpus:
 def curate_for_scope(
     corpus: EliteCorpus, scope: Scope, home_state: str | None
 ) -> list[CollegeFact]:
+    """Filter the Elite corpus down to one scope.
+
+    Scope semantics (updated):
+    - "national_excl_home": national universities (non-LAC) located OUTSIDE the
+      student's home state. Home-state colleges (both LAC and non-LAC) are
+      excluded entirely from this list.
+    - "lac": Liberal Arts Colleges nationwide, EXCLUDING home-state LACs.
+    - "in_state": ALL colleges in the home state (both LAC and non-LAC).
+    """
     home = (home_state or "").upper().strip()
     out: list[CollegeFact] = []
     for fact in corpus.all():
+        is_home = bool(home and fact.state and fact.state.upper() == home)
         if scope == "national_excl_home":
             if fact.is_lac:
                 continue
-            if home and fact.state and fact.state.upper() == home:
+            if is_home:
                 continue
             out.append(fact)
         elif scope == "in_state":
-            if fact.is_lac:
-                continue
-            if home and fact.state and fact.state.upper() == home:
+            if is_home:
                 out.append(fact)
         elif scope == "lac":
-            if fact.is_lac:
+            if fact.is_lac and not is_home:
                 out.append(fact)
     out.sort(key=lambda f: (f.acceptance_rate or 1.0))
     return out

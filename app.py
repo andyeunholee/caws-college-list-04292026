@@ -187,6 +187,15 @@ def _run_pipeline(
     if lang in ("both", "ko"):
         targets.append(("ko", "_KR", action_plan_md_ko or action_plan_md))
 
+    # Build a normalised set of LAC names from the corpus so Part 3 can tag
+    # in-state LACs with "(LAC)". Lookup is case/punctuation-insensitive.
+    import re as _re
+    lac_names = frozenset(
+        _re.sub(r"[^a-z0-9]", "", f.name.lower())
+        for f in corpus.all()
+        if f.is_lac
+    )
+
     written: dict[str, Path] = {}
     for lang_code, file_suffix, plan_md in targets:
         base_path = out_dir / f"{slug}_college_list_{today}{file_suffix}.docx"
@@ -206,6 +215,7 @@ def _run_pipeline(
                     flags=flags,
                     out_path=docx_path,
                     lang=lang_code,  # type: ignore[arg-type]
+                    lac_names=lac_names,
                 )
                 break
             except PermissionError:
@@ -263,15 +273,17 @@ lang_map: dict[str, LangChoice] = {
 lang: LangChoice = lang_map[lang_label]
 
 with st.expander("고급 설정 (선택)", expanded=False):
-    disable_grounding = st.checkbox(
-        "Elite 데이터셋 사용 안 함 — Claude 학습 지식만으로 research",
+    use_grounding = st.checkbox(
+        "Elite 데이터셋 사용함 — 켜면 repo의 grounding facts(합격률·ED/EA)를 활용",
         value=False,
         help=(
-            "기본은 OFF. 켜면 repo의 Elite 그라운딩(202개 대학 합격률·ED/EA 정보)을 "
-            "system prompt에서 제거하고, Claude가 본인 학습 지식만으로 추천을 만듭니다. "
-            "신규 학교나 더 자유로운 추천이 가능하지만, 합격률·마감일이 덜 일관될 수 있습니다."
+            "기본은 OFF (= Claude 학습 지식만으로 research, 추천 폭이 더 넓음). "
+            "켜면 repo의 Elite 그라운딩(202개 대학 합격률·ED/EA 정보)을 "
+            "system prompt에 포함시켜 일관성·정확성을 높이는 대신, "
+            "그 202개 외 학교는 거의 추천되지 않습니다."
         ),
     )
+    disable_grounding = not use_grounding
     use_opus_for_research = st.checkbox(
         "Research 단계에 Opus 사용 (Sonnet 대신)",
         value=False,
