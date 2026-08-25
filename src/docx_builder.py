@@ -77,6 +77,19 @@ QB_PARTNERS: frozenset[str] = frozenset({
 })
 
 
+# Korean UI font. 맑은 고딕 (Malgun Gothic) ships with Windows and Office for
+# Mac; Word substitutes a sans-serif Hangul font where it is missing.
+KO_FONT = "맑은 고딕"
+
+
+def _set_east_asian_font(rPr, font_name: str) -> None:
+    rFonts = rPr.find(qn("w:rFonts"))
+    if rFonts is None:
+        rFonts = OxmlElement("w:rFonts")
+        rPr.insert(0, rFonts)
+    rFonts.set(qn("w:eastAsia"), font_name)
+
+
 def _is_qb(name: str) -> bool:
     return name in QB_PARTNERS
 
@@ -133,19 +146,36 @@ def _add_bottom_border(paragraph, color_hex: str = HEADER_BG, sz: str = "8") -> 
     pPr.append(pBdr)
 
 
-def _add_field(paragraph, instr: str) -> None:
-    """Insert a Word field (e.g., PAGE, NUMPAGES) into a paragraph."""
+def _add_field(paragraph, instr: str, placeholder: str = "1"):
+    """Insert a complete Word field (e.g., PAGE, NUMPAGES) into a paragraph.
+
+    Emits the full begin / instrText / separate / result / end sequence and
+    marks the field dirty so Word recalculates it on open. Without the
+    separate+result part, viewers show an empty result (e.g. "Page 5 of ")
+    until the user manually updates fields.
+
+    Returns the run holding the visible result so callers can style it.
+    """
     run = paragraph.add_run()
     fldBegin = OxmlElement("w:fldChar")
     fldBegin.set(qn("w:fldCharType"), "begin")
+    fldBegin.set(qn("w:dirty"), "true")
     instrText = OxmlElement("w:instrText")
     instrText.set(qn("xml:space"), "preserve")
-    instrText.text = instr
-    fldEnd = OxmlElement("w:fldChar")
-    fldEnd.set(qn("w:fldCharType"), "end")
+    instrText.text = f" {instr} "
+    fldSep = OxmlElement("w:fldChar")
+    fldSep.set(qn("w:fldCharType"), "separate")
     run._r.append(fldBegin)
     run._r.append(instrText)
-    run._r.append(fldEnd)
+    run._r.append(fldSep)
+
+    result_run = paragraph.add_run(placeholder)
+
+    end_run = paragraph.add_run()
+    fldEnd = OxmlElement("w:fldChar")
+    fldEnd.set(qn("w:fldCharType"), "end")
+    end_run._r.append(fldEnd)
+    return result_run
 
 
 def _usable_width(doc: Document):
@@ -171,9 +201,17 @@ def _apply_column_ratios(table, ratios: list[float], total_width) -> None:
 
 def _setup_document(doc: Document, profile: StudentProfile, lang: Lang) -> None:
     normal = doc.styles["Normal"]
-    # Korean text renders well in 맑은 고딕; English in Calibri.
-    normal.font.name = "맑은 고딕" if lang == "ko" else "Calibri"
+    # Latin text: 맑은 고딕 for KO docs, Calibri for EN docs. Hangul glyphs
+    # are drawn with the *East Asian* font slot, which python-docx does not
+    # set — without it Word falls back to 바탕 (serif). Set it explicitly.
+    normal.font.name = KO_FONT if lang == "ko" else "Calibri"
     normal.font.size = Pt(10.5)
+    _set_east_asian_font(normal.element.get_or_add_rPr(), KO_FONT)
+    # Also set the document-wide default so header/footer/table text inherits it.
+    styles_el = doc.styles.element
+    rpr_default = styles_el.find(qn("w:docDefaults") + "/" + qn("w:rPrDefault") + "/" + qn("w:rPr"))
+    if rpr_default is not None:
+        _set_east_asian_font(rpr_default, KO_FONT)
 
     section = doc.sections[0]
     section.top_margin = Inches(0.9)
