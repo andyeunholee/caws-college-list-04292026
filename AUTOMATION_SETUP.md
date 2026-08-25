@@ -60,8 +60,6 @@ https://github.com/andyeunholee/caws-college-list-04292026/settings/secrets/acti
 |---|---|---|
 | `REPORT_RECIPIENTS` | `andy.lee@eliteprep.com` | 쉼표로 여러 명 가능 |
 | `SHEET_ID` / `SHEET_GID` | 현재 시트 | 시트를 바꿀 때 |
-| `DISABLE_GROUNDING` | `1` | `0`이면 Elite 데이터셋 사용 |
-| `RESEARCH_MODEL` | (비어 있음) | `claude-opus-4-7` 등 |
 | `MAX_ROWS_PER_RUN` | `3` | 한 번에 처리할 최대 응답 수 |
 
 ## 4단계. 첫 실행 테스트
@@ -85,6 +83,7 @@ https://github.com/andyeunholee/caws-college-list-04292026/settings/secrets/acti
 - 처리 상태는 시트의 `Report Status` 열에 기록됩니다: `PROCESSING` → `SENT` / `ERROR …` / `SKIPPED`
 - `SENT`로 시작하지 않는 행은 다음 실행 때 다시 시도합니다 (ERROR 자동 재시도).
 - 같은 행이 두 번 발송되는 일은 없습니다 (`concurrency` + 상태 열).
+- 리포트 옵션은 **Grounding OFF + Sonnet** 으로 고정되어 있습니다 (웹 앱 기본값과 동일).
 - 학생에게는 보내지 않습니다. 수신자는 `REPORT_RECIPIENTS`에 적힌 주소뿐입니다.
 - 비용: 응답 1건당 Claude 약 $0.5–1. GitHub Actions는 무료 한도(월 2,000분) 내에서 동작합니다
   (30분 간격 확인 ≈ 월 700분, 리포트 생성 1건당 약 4–5분 추가).

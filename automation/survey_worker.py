@@ -20,8 +20,9 @@ Environment variables (all provided as GitHub Secrets / Variables):
   REPORT_RECIPIENTS            comma-separated recipients
   STATUS_COLUMN                header of the status column (default "Report Status")
   MAX_ROWS_PER_RUN             safety cap per run (default 3)
-  DISABLE_GROUNDING            "1" (default) = Claude knowledge only, "0" = use Elite dataset
-  RESEARCH_MODEL               optional model override for the generation step
+
+Fixed settings (not configurable, by design): Grounding OFF (Claude training
+knowledge only) and the default Sonnet model for every step.
 """
 
 from __future__ import annotations
@@ -146,8 +147,9 @@ def main() -> int:
     ws = _open_worksheet()
     status_name = os.environ.get("STATUS_COLUMN", "").strip() or "Report Status"
     max_rows = int(os.environ.get("MAX_ROWS_PER_RUN", "3") or "3")
-    disable_grounding = os.environ.get("DISABLE_GROUNDING", "1").strip() != "0"
-    research_model = os.environ.get("RESEARCH_MODEL", "").strip() or None
+    # Fixed by design: Grounding OFF + default Sonnet model (same as the web app defaults).
+    disable_grounding = True
+    research_model = None
 
     values = ws.get_all_values()
     if not values:
