@@ -1,0 +1,54 @@
+name: Survey → College List Report
+
+on:
+  schedule:
+    # Every 30 minutes (UTC). GitHub may delay scheduled runs by a few minutes.
+    - cron: "*/30 * * * *"
+  repository_dispatch:
+    # Instant trigger from the Google Apps Script in automation/apps_script.gs
+    types: [survey_submitted]
+  workflow_dispatch:
+    # Manual "Run workflow" button in the Actions tab
+
+concurrency:
+  group: survey-worker
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: automation/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r automation/requirements.txt
+
+      - name: Process new survey responses
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SHEET_ID: ${{ vars.SHEET_ID || '1PdTtunMPZj_5Y_u-znVKH5BLlWZKvvNPshy3os29B88' }}
+          SHEET_GID: ${{ vars.SHEET_GID || '2031670552' }}
+          REPORT_RECIPIENTS: ${{ vars.REPORT_RECIPIENTS || 'andy.lee@eliteprep.com' }}
+          DISABLE_GROUNDING: ${{ vars.DISABLE_GROUNDING || '1' }}
+          RESEARCH_MODEL: ${{ vars.RESEARCH_MODEL }}
+          MAX_ROWS_PER_RUN: ${{ vars.MAX_ROWS_PER_RUN || '3' }}
+        run: python automation/survey_worker.py
+
+      - name: Upload generated reports (debug copy, kept 14 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports-${{ github.run_id }}
+          path: output/**/*.docx
+          if-no-files-found: ignore
+          retention-days: 14

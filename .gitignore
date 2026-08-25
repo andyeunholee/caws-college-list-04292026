@@ -12,3 +12,7 @@ output/
 .streamlit/secrets.toml
 # Word lock files
 ~$*.docx
+
+# Google service-account keys
+*service*account*.json
+*.iam.gserviceaccount*.json
