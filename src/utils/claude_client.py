@@ -43,6 +43,15 @@ def _estimate_cost(usage: dict[str, int], model: str) -> float:
     return round(cost, 4)
 
 
+_SAMPLING_MODELS = ("-4-6", "-4-5", "haiku-4-5", "-4-1", "-4-0", "-3-")
+
+
+def _supports_sampling(model: str) -> bool:
+    """True for models that still accept temperature (Claude 4.6 / 4.5 line and older)."""
+    m = model.lower()
+    return any(tag in m for tag in _SAMPLING_MODELS)
+
+
 def call_messages(
     client: Anthropic,
     *,
@@ -68,14 +77,21 @@ def call_messages(
         f"Claude call: {label} (model={model}, max_tokens={max_tokens}, streaming)"
     )
 
+    # anthropic SDK 1.x removed the `temperature` keyword. The Claude 4.6/4.5
+    # line still honours it on the wire, so pass it via extra_body for those
+    # models only; Opus 4.7+ / Sonnet 5 / Fable 5 reject sampling params (400).
+    extra_body: dict[str, Any] = {}
+    if _supports_sampling(model):
+        extra_body["temperature"] = temperature
+
     text_parts: list[str] = []
     final_message = None
     with client.messages.stream(
         model=model,
         max_tokens=max_tokens,
-        temperature=temperature,
         system=blocks,
         messages=[{"role": "user", "content": user_message}],
+        extra_body=extra_body or None,
     ) as stream:
         for chunk in stream.text_stream:
             text_parts.append(chunk)
