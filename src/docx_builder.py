@@ -88,6 +88,9 @@ def _set_east_asian_font(rPr, font_name: str) -> None:
         rFonts = OxmlElement("w:rFonts")
         rPr.insert(0, rFonts)
     rFonts.set(qn("w:eastAsia"), font_name)
+    # A theme attribute would override the explicit font in Word — drop it.
+    if rFonts.get(qn("w:eastAsiaTheme")) is not None:
+        del rFonts.attrib[qn("w:eastAsiaTheme")]
 
 
 def _is_qb(name: str) -> bool:
