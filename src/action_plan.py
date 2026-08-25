@@ -59,12 +59,12 @@ def generate_action_plan(
         max_tokens=4096,
         temperature=0.4,
         cache_last_block=False,
-        label="개인화 액션 플랜 생성",
+        label="Personalized action plan generation",
     )
 
     if save_raw_to is not None:
         save_raw_to.parent.mkdir(parents=True, exist_ok=True)
         save_raw_to.write_text(text, encoding="utf-8")
 
-    logging_ko.info("액션 플랜 생성 완료")
+    logging_ko.info("Action plan generated")
     return text.strip()

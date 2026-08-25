@@ -33,14 +33,14 @@ def translate_markdown_to_korean(
     client: Anthropic,
     *,
     save_to: Path | None = None,
-    label: str = "마크다운 한글 번역",
+    label: str = "Markdown Korean translation",
 ) -> str:
     """Translate an English markdown document into Korean via Claude Sonnet."""
 
     if save_to is not None and save_to.exists():
         cached = save_to.read_text(encoding="utf-8").strip()
         if cached:
-            logging_ko.info(f"[cache] 한글 번역 재사용: {save_to.name}")
+            logging_ko.info(f"[cache] Reusing Korean translation: {save_to.name}")
             return cached
 
     system_blocks = [claude_client.make_text_block(_TRANSLATE_SYSTEM)]
@@ -66,6 +66,6 @@ def translate_markdown_to_korean(
     if save_to is not None:
         save_to.parent.mkdir(parents=True, exist_ok=True)
         save_to.write_text(translated, encoding="utf-8")
-        logging_ko.info(f"한글 번역 저장: {save_to.name}")
+        logging_ko.info(f"Korean translation saved: {save_to.name}")
 
     return translated

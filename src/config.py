@@ -35,7 +35,7 @@ PRICE_PER_MTOK_OUTPUT = 15.0
 def require_api_key() -> str:
     if not ANTHROPIC_API_KEY:
         raise RuntimeError(
-            "ANTHROPIC_API_KEY가 설정되어 있지 않습니다. "
-            f"{PROJECT_ROOT / '.env'} 파일을 만들고 키를 입력하세요."
+            "ANTHROPIC_API_KEY is not set. "
+            f"Create the {PROJECT_ROOT / '.env'} file and enter your key."
         )
     return ANTHROPIC_API_KEY

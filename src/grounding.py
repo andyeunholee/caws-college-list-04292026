@@ -39,10 +39,10 @@ def _slug_key(name: str) -> str:
 def _load_college_lists(elite_dir: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     path = elite_dir / "college_lists.py"
     if not path.exists():
-        raise FileNotFoundError(f"college_lists.py가 없습니다: {path}")
+        raise FileNotFoundError(f"college_lists.py not found: {path}")
     spec = importlib.util.spec_from_file_location("elite_college_lists", path)
     if spec is None or spec.loader is None:
-        raise ImportError("college_lists.py 로드 실패")
+        raise ImportError("Failed to load college_lists.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return (
@@ -53,7 +53,7 @@ def _load_college_lists(elite_dir: Path) -> tuple[list[dict[str, Any]], list[dic
 
 def _safe_load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
-        logging_ko.warn(f"{path.name} 없음 — 무시하고 진행")
+        logging_ko.warn(f"{path.name} missing — skipping")
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -117,7 +117,7 @@ def load_elite_dataset(elite_dir: Path) -> EliteCorpus:
     _ingest(nat_list, nat_card, is_lac=False)
     _ingest(lac_list, lac_card, is_lac=True)
 
-    logging_ko.info(f"Elite 데이터셋 로드 완료: {len(by_name)}개 대학")
+    logging_ko.info(f"Elite dataset loaded: {len(by_name)} colleges")
     return EliteCorpus(by_name=by_name)
 
 

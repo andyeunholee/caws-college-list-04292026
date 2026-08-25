@@ -24,7 +24,7 @@ import streamlit as st
 
 # st.set_page_config MUST be the first Streamlit call in the script.
 st.set_page_config(
-    page_title="CAWS College List 생성기",
+    page_title="CAWS College List Generator",
     page_icon="🎓",
     layout="centered",
 )
@@ -107,7 +107,7 @@ def _run_pipeline(
     config.require_api_key()
     client = claude_client.make_client()
 
-    log("1/7 학생 이메일에서 프로필 추출 중…")
+    log("1/7 Extracting profile from student email…")
     profile = extract_profile(raw_text, client)
 
     today = _dt.date.today().isoformat()
@@ -116,12 +116,12 @@ def _run_pipeline(
     raw_dir = out_dir / "raw_responses"
     out_dir.mkdir(parents=True, exist_ok=True)
     save_profile(profile, out_dir / "student_profile.json")
-    log(f"   → 학생 이름: {profile.name} / 주: {profile.state or '미상'}")
+    log(f"   → Student name: {profile.name} / State: {profile.state or 'Unknown'}")
 
-    log("2/7 Elite 데이터셋 로딩 및 큐레이션 중…")
+    log("2/7 Loading and curating Elite dataset…")
     corpus = load_elite_dataset(config.ELITE_DATA_DIR)
     if disable_grounding:
-        log("   ⓘ Grounding OFF — Claude 학습 지식만 사용")
+        log("   ⓘ Grounding OFF — using Claude training knowledge only")
     curated = {
         "national_excl_home": curate_for_scope(corpus, "national_excl_home", profile.state),
         "in_state": curate_for_scope(corpus, "in_state", profile.state),
@@ -133,7 +133,7 @@ def _run_pipeline(
     )
 
     if research_model:
-        log(f"   ⓘ Research model: {research_model} (생성 단계에만 적용)")
+        log(f"   ⓘ Research model: {research_model} (applied to generation step only)")
 
     scope_filenames = {
         "national_excl_home": "national.json",
@@ -142,7 +142,7 @@ def _run_pipeline(
     }
     scopes_result: dict[Scope, TieredList] = {}
     for i, scope in enumerate(("national_excl_home", "in_state", "lac"), start=3):
-        log(f"{i}/7 Claude로 {scope} 리스트 생성 중… (60-90초)")
+        log(f"{i}/7 Generating {scope} list with Claude… (60-90 sec)")
         cached_path = raw_dir / scope_filenames[scope]
         scopes_result[scope] = generate_tiered_list(
             profile, scope, curated[scope], client,
@@ -156,7 +156,7 @@ def _run_pipeline(
             f"safety {len(scopes_result[scope].safety)}"
         )
 
-    log("6/7 ED/EA 분류 + 검증 중…")
+    log("6/7 Classifying ED/EA + validating…")
     all_rows = (
         scopes_result["national_excl_home"].all_rows()
         + scopes_result["in_state"].all_rows()
@@ -164,9 +164,9 @@ def _run_pipeline(
     )
     flags = cross_check(all_rows, corpus)
     ed_rows, ea_rows = split_ed_ea(all_rows, corpus)
-    log(f"   → ED 가능 {len(ed_rows)} / EA·REA·SCEA 가능 {len(ea_rows)}")
+    log(f"   → ED eligible {len(ed_rows)} / EA·REA·SCEA eligible {len(ea_rows)}")
 
-    log("7/7 액션 플랜 + Word 파일 생성 중…")
+    log("7/7 Generating action plan + Word file…")
     top_picks = _select_top_picks(scopes_result)
     action_plan_md = generate_action_plan(
         profile, top_picks, client, save_raw_to=raw_dir / "action_plan.md"
@@ -178,7 +178,7 @@ def _run_pipeline(
             action_plan_md,
             client,
             save_to=raw_dir / "action_plan_ko.md",
-            label="액션 플랜 한글 번역",
+            label="Action plan Korean translation",
         )
 
     targets: list[tuple[str, str, str]] = []
@@ -211,7 +211,7 @@ def _run_pipeline(
                     ed_rows=ed_rows,
                     ea_rows=ea_rows,
                     action_plan_md=plan_md
-                    or "_(액션 플랜이 이번 실행에서 생성되지 않았습니다.)_",
+                    or "_(No action plan was generated in this run.)_",
                     flags=flags,
                     out_path=docx_path,
                     lang=lang_code,  # type: ignore[arg-type]
@@ -228,7 +228,7 @@ def _run_pipeline(
         written[lang_code] = docx_path
         log(f"   ✓ ({lang_code.upper()}) {docx_path.name}")
 
-    log("완료.")
+    log("Done.")
     return written
 
 
@@ -236,75 +236,75 @@ def _run_pipeline(
 #                               Streamlit UI
 # ──────────────────────────────────────────────────────────────────────────────
 
-st.title("🎓 12학년 학생 College List 생성기")
+st.title("🎓 12th Grade Student College List Generator")
 st.caption(
-    "학생 이메일을 paste → Claude가 분석해서 Reach/Match/Safety × National/In-state/LAC × ED/EA 리스트와 "
-    "액션 플랜을 Word 파일로 생성합니다."
+    "Paste a student email → Claude analyzes it and generates a Reach/Match/Safety × National/In-state/LAC × ED/EA list "
+    "and an action plan as a Word file."
 )
 
-with st.expander("사용법", expanded=False):
+with st.expander("How to use", expanded=False):
     st.markdown(
         """
-        1. 아래 텍스트 박스에 학생이 보낸 **이메일 본문 전체를 paste**하세요.
-        2. 출력 언어를 고르세요 (기본: 한글).
-        3. **"College List 생성"** 버튼을 누르고 60–120초 기다리세요.
-        4. 완료되면 Word 파일을 다운로드할 수 있습니다.
+        1. **Paste the entire body of the email** the student sent into the text box below.
+        2. Choose the output language (default: Korean).
+        3. Click the **"Generate College List"** button and wait 60–120 seconds.
+        4. When finished, you can download the Word file.
         """
     )
 
 raw_text = st.text_area(
-    "학생 이메일 본문",
+    "Student email body",
     height=320,
-    placeholder="여기에 학생이 보낸 이메일 텍스트 전체를 붙여넣으세요. 이름, 학년, GPA, SAT, 활동, 관심 전공 등이 포함되어 있을수록 정확도가 올라갑니다.",
+    placeholder="Paste the full text of the email the student sent here. The more it includes — name, grade, GPA, SAT, activities, intended major, etc. — the more accurate the results.",
     key="raw_email",
 )
 
 lang_label = st.radio(
-    "출력 언어",
-    options=["한글", "영문", "영문 + 한글 (둘 다)"],
+    "Output language",
+    options=["Korean", "English", "English + Korean (both)"],
     index=0,
     horizontal=True,
 )
 lang_map: dict[str, LangChoice] = {
-    "한글": "ko",
-    "영문": "en",
-    "영문 + 한글 (둘 다)": "both",
+    "Korean": "ko",
+    "English": "en",
+    "English + Korean (both)": "both",
 }
 lang: LangChoice = lang_map[lang_label]
 
-with st.expander("고급 설정 (선택)", expanded=False):
+with st.expander("Advanced settings (optional)", expanded=False):
     use_grounding = st.checkbox(
-        "Elite 데이터셋 사용함 — 켜면 repo의 grounding facts(합격률·ED/EA)를 활용",
+        "Use Elite dataset — when on, uses the repo's grounding facts (acceptance rates·ED/EA)",
         value=False,
         help=(
-            "기본은 OFF (= Claude 학습 지식만으로 research, 추천 폭이 더 넓음). "
-            "켜면 repo의 Elite 그라운딩(202개 대학 합격률·ED/EA 정보)을 "
-            "system prompt에 포함시켜 일관성·정확성을 높이는 대신, "
-            "그 202개 외 학교는 거의 추천되지 않습니다."
+            "Default is OFF (= research with Claude training knowledge only, broader range of recommendations). "
+            "When on, the repo's Elite grounding (acceptance rate·ED/EA info for 202 colleges) is "
+            "included in the system prompt to improve consistency and accuracy, but "
+            "schools outside those 202 are rarely recommended."
         ),
     )
     disable_grounding = not use_grounding
     use_opus_for_research = st.checkbox(
-        "Research 단계에 Opus 사용 (Sonnet 대신)",
+        "Use Opus for the research step (instead of Sonnet)",
         value=False,
         help=(
-            "기본은 OFF (Sonnet). 켜면 Reach/Match/Safety 리스트 생성(총 9회 호출)에만 "
-            "Opus 4.7을 씁니다. 추론 품질↑, 비용 약 5배↑ (학생 1명당 ≈ $2-3). "
-            "추출·액션 플랜·번역은 비용 절감을 위해 항상 Sonnet."
+            "Default is OFF (Sonnet). When on, Opus 4.7 is used only for Reach/Match/Safety list generation "
+            "(9 calls total). Reasoning quality↑, cost about 5×↑ (≈ $2-3 per student). "
+            "Extraction·action plan·translation always use Sonnet to save cost."
         ),
     )
 
 research_model: str | None = "claude-opus-4-7" if use_opus_for_research else None
 
-generate_clicked = st.button("College List 생성", type="primary", use_container_width=True)
+generate_clicked = st.button("Generate College List", type="primary", use_container_width=True)
 
 if generate_clicked:
     if not raw_text.strip():
-        st.error("학생 이메일 본문이 비어 있습니다.")
+        st.error("Student email body is empty.")
         st.stop()
 
     status_log: list[str] = []
-    status_box = st.status("실행 중…", expanded=True)
+    status_box = st.status("Running…", expanded=True)
 
     try:
         with status_box:
@@ -344,8 +344,8 @@ if generate_clicked:
                 cr = usage.get("cache_read_input_tokens", 0)
                 out_tok = usage.get("output_tokens", 0)
                 log(
-                    f"$ 입력 {in_tok:,} / 캐시W {cw:,} / 캐시R {cr:,} / "
-                    f"출력 {out_tok:,} → 약 ${estimated_usd:.4f}"
+                    f"$ input {in_tok:,} / cacheW {cw:,} / cacheR {cr:,} / "
+                    f"output {out_tok:,} → approx. ${estimated_usd:.4f}"
                 )
 
             _ko.cost = _capture_cost  # type: ignore[assignment]
@@ -362,20 +362,37 @@ if generate_clicked:
                     setattr(_ko, k, v)
 
             placeholder.markdown("```\n" + "\n".join(status_log) + "\n```")
-        status_box.update(label="완료 ✅", state="complete", expanded=False)
+        status_box.update(label="Done ✅", state="complete", expanded=False)
     except Exception as e:  # noqa: BLE001 — surface any pipeline error to the UI
-        status_box.update(label="실패 ❌", state="error", expanded=True)
-        st.error(f"오류: {e}")
+        status_box.update(label="Failed ❌", state="error", expanded=True)
+        st.error(f"Error: {e}")
         st.code(traceback.format_exc(), language="text")
         st.stop()
 
-    st.success(f"{len(written)}개 Word 파일이 생성되었습니다.")
-    for lang_code, path in written.items():
-        label = "한글 (.docx)" if lang_code == "ko" else "영문 (.docx)"
+    # Persist generated file paths across reruns so download buttons don't
+    # disappear after the user clicks one. (Streamlit reruns the whole script
+    # on every widget interaction; `generate_clicked` flips back to False, so
+    # without session_state the second download button would vanish.)
+    st.session_state["generated_files"] = {k: str(v) for k, v in written.items()}
+
+generated = st.session_state.get("generated_files")
+if generated:
+    st.success(f"{len(generated)} Word file(s) generated.")
+    st.caption(
+        f"Files are also permanently saved in the `output/` folder: "
+        f"`{Path(next(iter(generated.values()))).parent}`"
+    )
+    for lang_code, path_str in generated.items():
+        path = Path(path_str)
+        if not path.exists():
+            st.warning(f"File not found: {path.name}")
+            continue
+        label = "Korean (.docx)" if lang_code == "ko" else "English (.docx)"
         st.download_button(
-            label=f"⬇ {label} 다운로드 — {path.name}",
+            label=f"⬇ Download {label} — {path.name}",
             data=path.read_bytes(),
             file_name=path.name,
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             use_container_width=True,
+            key=f"download_{lang_code}",
         )

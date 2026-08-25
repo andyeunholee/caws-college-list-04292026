@@ -65,7 +65,7 @@ def call_messages(
 
     model = model_override or config.CLAUDE_MODEL
     logging_ko.step(
-        f"Claude 호출: {label} (model={model}, max_tokens={max_tokens}, streaming)"
+        f"Claude call: {label} (model={model}, max_tokens={max_tokens}, streaming)"
     )
 
     text_parts: list[str] = []
@@ -92,7 +92,7 @@ def call_messages(
     logging_ko.cost(usage, _estimate_cost(usage, model))
 
     if final_message.stop_reason == "max_tokens":
-        logging_ko.warn(f"{label}: 응답이 max_tokens에 도달했습니다. 결과가 잘렸을 수 있습니다.")
+        logging_ko.warn(f"{label}: response reached max_tokens. Output may be truncated.")
 
     return text, usage
 

@@ -21,9 +21,9 @@ from .utils import claude_client, logging_ko
 
 
 _SCOPE_LABELS: dict[Scope, str] = {
-    "national_excl_home": "전국 대학 리스트 (거주 주의 모든 대학 — LAC 포함 — 제외)",
-    "in_state": "거주 주 대학 리스트 (LAC 포함)",
-    "lac": "전국 LAC 대학 리스트 (거주 주 LAC만 제외)",
+    "national_excl_home": "National college list (excluding all colleges in home state — LACs included)",
+    "in_state": "Home-state college list (LACs included)",
+    "lac": "National LAC list (excluding home-state LACs only)",
 }
 
 _TIER_BANDS: dict[Tier, str] = {
@@ -263,7 +263,7 @@ def _dedup_across_tiers(
     new_safety = _filter(safety)
     if dropped:
         logging_ko.info(
-            f"Cross-tier 중복 제거: {len(dropped)}개 ({', '.join(sorted(set(dropped))[:5])}{' …' if len(set(dropped)) > 5 else ''})"
+            f"Cross-tier dedup: {len(dropped)} removed ({', '.join(sorted(set(dropped))[:5])}{' …' if len(set(dropped)) > 5 else ''})"
         )
     return new_reach, new_match, new_safety
 
@@ -318,7 +318,7 @@ def _generate_one_tier(
             max_tokens=10000,
             temperature=0.2,
             cache_last_block=True,
-            label=f"{label} (재시도)",
+            label=f"{label} (retry)",
             model_override=model_override,
         )
         if raw_dump_path is not None:
@@ -326,7 +326,7 @@ def _generate_one_tier(
         raw_rows = _salvage_array(text)
         rows = _validate_rows(raw_rows, tier)
 
-    logging_ko.info(f"  {tier.upper()}: {len(rows)}개 (목표 {target_count})")
+    logging_ko.info(f"  {tier.upper()}: {len(rows)} (target {target_count})")
     return rows
 
 
@@ -393,7 +393,7 @@ def generate_tiered_list(
 
     counts = (len(reach), len(match_), len(safety))
     logging_ko.info(
-        f"{_SCOPE_LABELS[scope]} 완료: Reach {counts[0]} / Match {counts[1]} / Safety {counts[2]}"
+        f"{_SCOPE_LABELS[scope]} done: Reach {counts[0]} / Match {counts[1]} / Safety {counts[2]}"
     )
     return result
 
