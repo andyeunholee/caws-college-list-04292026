@@ -61,6 +61,7 @@ https://github.com/andyeunholee/caws-college-list-04292026/settings/secrets/acti
 | `REPORT_RECIPIENTS` | `andy.lee@eliteprep.com` | 쉼표로 여러 명 가능 |
 | `SHEET_ID` / `SHEET_GID` | 현재 시트 | 시트를 바꿀 때 |
 | `MAX_ROWS_PER_RUN` | `3` | 한 번에 처리할 최대 응답 수 |
+| `MAX_ATTEMPTS` | `3` | 한 응답을 최대 몇 번까지 재시도할지. 넘으면 `FAILED`로 표시하고 더 이상 건드리지 않음 |
 
 ## 4단계. 첫 실행 테스트
 
@@ -80,8 +81,12 @@ https://github.com/andyeunholee/caws-college-list-04292026/settings/secrets/acti
 
 ## 동작 규칙
 
-- 처리 상태는 시트의 `Report Status` 열에 기록됩니다: `PROCESSING` → `SENT` / `ERROR …` / `SKIPPED`
-- `SENT`로 시작하지 않는 행은 다음 실행 때 다시 시도합니다 (ERROR 자동 재시도).
+- 처리 상태는 시트의 `Report Status` 열에 기록됩니다: `PROCESSING 1/3` → `SENT` / `ERROR 1/3 …` / `SKIPPED`
+- `ERROR`인 행은 다음 실행 때 다시 시도하되 **최대 3번**(`MAX_ATTEMPTS`)까지만. 3번째도 실패하면
+  `FAILED 3/3 …`로 바뀌고 더 이상 재시도하지 않으므로, 잘못된 응답 하나가 새 응답 처리를 막거나
+  Claude 비용을 계속 쓰는 일이 없습니다.
+- `FAILED` 행을 다시 시도하려면 (예: 폼 답변을 보완한 뒤) 그 칸을 지우면 됩니다.
+- `SENT` / `FAILED` / `SKIPPED` 는 최종 상태이며 다시 건드리지 않습니다.
 - 같은 행이 두 번 발송되는 일은 없습니다 (`concurrency` + 상태 열).
 - 리포트 옵션은 **Grounding OFF + Sonnet** 으로 고정되어 있습니다 (웹 앱 기본값과 동일).
 - 학생에게는 보내지 않습니다. 수신자는 `REPORT_RECIPIENTS`에 적힌 주소뿐입니다.

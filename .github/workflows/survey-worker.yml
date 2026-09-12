@@ -58,6 +58,7 @@ jobs:
           SHEET_GID: ${{ vars.SHEET_GID || '2031670552' }}
           REPORT_RECIPIENTS: ${{ vars.REPORT_RECIPIENTS || 'andy.lee@eliteprep.com' }}
           MAX_ROWS_PER_RUN: ${{ vars.MAX_ROWS_PER_RUN || '3' }}
+          MAX_ATTEMPTS: ${{ vars.MAX_ATTEMPTS || '3' }}
         run: python automation/survey_worker.py
 
       - name: Upload generated reports (debug copy, kept 14 days)

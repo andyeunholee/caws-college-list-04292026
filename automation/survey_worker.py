@@ -20,6 +20,16 @@ Environment variables (all provided as GitHub Secrets / Variables):
   REPORT_RECIPIENTS            comma-separated recipients
   STATUS_COLUMN                header of the status column (default "Report Status")
   MAX_ROWS_PER_RUN             safety cap per run (default 3)
+  MAX_ATTEMPTS                 give up on a row after this many failed runs
+                               (default 3) — it is then marked FAILED and never
+                               retried, so a bad response cannot block new ones
+
+Status column values:
+  PROCESSING n/N <ts>   attempt n is running (a stale one means the job was killed)
+  ERROR n/N <ts> — …    attempt n failed; retried on the next run
+  FAILED n/N <ts> — …   terminal: MAX_ATTEMPTS exhausted (clear the cell to retry)
+  SENT <ts>             terminal: report emailed
+  SKIPPED …             terminal: response too short to process
 
 Fixed settings (not configurable, by design): Grounding OFF (Claude training
 knowledge only) and the default Sonnet model for every step.
@@ -30,6 +40,7 @@ from __future__ import annotations
 import datetime as _dt
 import json
 import os
+import re
 import smtplib
 import sys
 import traceback
@@ -52,6 +63,17 @@ DOCX_MIME = (
     "application",
     "vnd.openxmlformats-officedocument.wordprocessingml.document",
 )
+TERMINAL_STATUS_PREFIXES = ("SENT", "FAILED", "SKIPPED")
+_ATTEMPT_RE = re.compile(r"^(?:ERROR|PROCESSING)\s+(\d+)/\d+")
+
+
+def _prior_attempts(status: str) -> int:
+    """How many runs have already tried this row, read back from its status cell."""
+    m = _ATTEMPT_RE.match(status)
+    if m:
+        return int(m.group(1))
+    # Legacy cells written before attempts were counted ("ERROR <ts> — …").
+    return 1 if status.startswith(("ERROR", "PROCESSING")) else 0
 
 
 def _env(name: str, default: str | None = None) -> str:
@@ -147,6 +169,7 @@ def main() -> int:
     ws = _open_worksheet()
     status_name = os.environ.get("STATUS_COLUMN", "").strip() or "Report Status"
     max_rows = int(os.environ.get("MAX_ROWS_PER_RUN", "3") or "3")
+    max_attempts = int(os.environ.get("MAX_ATTEMPTS", "3") or "3")
     # Fixed by design: Grounding OFF + default Sonnet model (same as the web app defaults).
     disable_grounding = True
     research_model = None
@@ -165,7 +188,7 @@ def main() -> int:
         if not any(cell.strip() for cell in row):
             continue
         status = row[status_col - 1].strip() if status_col - 1 < len(row) else ""
-        if status.startswith("SENT"):
+        if status.startswith(TERMINAL_STATUS_PREFIXES):
             continue
         pending.append(sheet_row)
 
@@ -181,14 +204,27 @@ def main() -> int:
     failures = 0
     for sheet_row in pending:
         row = values[sheet_row - 1]
+        status = row[status_col - 1].strip() if status_col - 1 < len(row) else ""
+        attempt = _prior_attempts(status) + 1
+        now = f"{_dt.datetime.now():%Y-%m-%d %H:%M}"
+        if attempt > max_attempts:
+            # Only reachable via a stale PROCESSING n/N cell (job killed on its
+            # last allowed attempt): close it out instead of running again.
+            ws.update_cell(
+                sheet_row, status_col,
+                f"FAILED {max_attempts}/{max_attempts} {now} — giving up (previous: {status})"[:480],
+            )
+            _log(f"Row {sheet_row}: giving up after {max_attempts} attempts")
+            continue
+
         text = _row_to_text(headers, row, status_col)
         if len(text) < 40:
             ws.update_cell(sheet_row, status_col, "SKIPPED (empty response)")
             _log(f"Row {sheet_row}: skipped, too little content")
             continue
 
-        ws.update_cell(sheet_row, status_col, f"PROCESSING {_dt.datetime.now():%Y-%m-%d %H:%M}")
-        _log(f"Row {sheet_row}: starting pipeline")
+        ws.update_cell(sheet_row, status_col, f"PROCESSING {attempt}/{max_attempts} {now}")
+        _log(f"Row {sheet_row}: starting pipeline (attempt {attempt}/{max_attempts})")
         try:
             files = run_pipeline(
                 text,
@@ -213,9 +249,13 @@ def main() -> int:
             _log(f"Row {sheet_row}: done ({student})")
         except Exception as e:  # noqa: BLE001 — record any failure on the sheet
             failures += 1
-            err = f"ERROR {_dt.datetime.now():%Y-%m-%d %H:%M} — {type(e).__name__}: {e}"[:480]
+            label = "FAILED" if attempt >= max_attempts else "ERROR"
+            err = (
+                f"{label} {attempt}/{max_attempts} {_dt.datetime.now():%Y-%m-%d %H:%M}"
+                f" — {type(e).__name__}: {e}"
+            )[:480]
             ws.update_cell(sheet_row, status_col, err)
-            _log(f"Row {sheet_row}: FAILED\n{traceback.format_exc()}")
+            _log(f"Row {sheet_row}: {label} (attempt {attempt}/{max_attempts})\n{traceback.format_exc()}")
 
     return 1 if failures else 0
 
