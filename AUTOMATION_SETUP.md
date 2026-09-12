@@ -1,7 +1,7 @@
 # 설문 → 자동 리포트 이메일 설정 가이드 (GitHub Actions)
 
 Google Forms 응답 시트에 새 행이 들어오면 GitHub Actions가 30분마다(또는 즉시) 확인해서
-영어·한글 Word 리포트 2개를 만들고 `andy.lee@eliteprep.com`으로 첨부 발송합니다.
+영어·한글 Word 리포트 2개를 만들고 `andy.lee@eliteprep.com`, `sue.kim@eliteprep.com`으로 첨부 발송합니다.
 
 ```
 Google Form 응답 시트 ──▶ GitHub Actions (automation/survey_worker.py)
@@ -58,7 +58,7 @@ https://github.com/andyeunholee/caws-college-list-04292026/settings/secrets/acti
 
 | 이름 | 기본값 | 의미 |
 |---|---|---|
-| `REPORT_RECIPIENTS` | `andy.lee@eliteprep.com` | 쉼표로 여러 명 가능 |
+| `REPORT_RECIPIENTS` | `andy.lee@eliteprep.com,sue.kim@eliteprep.com` | 쉼표로 여러 명 가능 |
 | `SHEET_ID` / `SHEET_GID` | 현재 시트 | 시트를 바꿀 때 |
 | `MAX_ROWS_PER_RUN` | `3` | 한 번에 처리할 최대 응답 수 |
 | `MAX_ATTEMPTS` | `3` | 한 응답을 최대 몇 번까지 재시도할지. 넘으면 `FAILED`로 표시하고 더 이상 건드리지 않음 |
